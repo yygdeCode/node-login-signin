@@ -1,0 +1,120 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Untitled Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            text-decoration: none;
+            outline: none;
+        }
+        body,html{
+            height:100%;
+            width:100%;
+        }
+        body{
+            background: url('1.jpg');
+            background-size: 100% 100%;
+        }
+        .box{
+            height:400px;
+            width:600px;
+            border-radius: 10px;
+            background: rgba(255,255,255,.8);
+            margin:150px auto;
+            overflow: hidden;
+        }
+        .box h1{
+            text-align: center;margin-top:50px;
+        }
+        .box input{
+            height:30px;
+            width:250px;
+            display: block;margin:20px auto;
+            text-indent: 5px;
+        }
+        .box button,a {
+            height:50px;
+            width:250px;
+            margin:20px auto;
+            display: block;
+            font-size: 30px;
+            background:#FF6D0C;
+            text-align: center;
+            line-height: 50px;
+            color:#fff
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <h1>用户登陆</h1>
+        <input type="text" id="stuNum" placeholder="学号">
+        <input type="password" id="password" placeholder="密码">
+        <button id="login">提交</button>
+        <a href="/sign.html">注册</a>
+    </div>
+    <script>
+        let login = document.getElementById('login');
+
+        stuNum.onblur = function(){
+            console.log(1)
+            let stuNumVal = document.getElementById('stuNum').value;
+            let params = 'stuNum=' + stuNumVal;
+            if(stuNumVal.length > 0){
+                xmlHttp = new XMLHttpRequest();
+                // xmlHttp.open("GET", "/login?" + params, true);
+                // xmlHttp.send(null);
+                xmlHttp.open("POST", "/hasUser", true);
+                xmlHttp.send(params);
+                xmlHttp.onreadystatechange = function() {
+                    if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+                        console.log(xmlHttp.responseText);
+                        console.log(typeof xmlHttp.responseText)
+                        if (xmlHttp.responseText == 'OK') {
+
+                        } else {
+                            alert('没有这个账号')
+                        }
+                    }
+                }
+            }
+        }
+
+        login.onclick = function() {
+            let stuNum = document.getElementById('stuNum').value,
+                password = document.getElementById('password').value;
+            let params = 'stuNum=' + stuNum + '&password=' + password;
+
+            if (stuNum.length > 0 && password.length > 0) {
+                xmlHttp = new XMLHttpRequest();
+                // xmlHttp.open("GET", "/login?" + params, true);
+                // xmlHttp.send(null);
+                xmlHttp.open("POST", "/login", true);
+                xmlHttp.send(params);
+                xmlHttp.onreadystatechange = function() {
+                    if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+                        console.log(xmlHttp.responseText);
+                        console.log(typeof xmlHttp.responseText)
+                        if (xmlHttp.responseText == 'OK') {
+                            alert('成功')
+                            location.href = '/main.html'
+                        } else {
+                            alert('失败')
+                        }
+                    }
+                }
+            }
+
+        }
+
+    </script>
+</body>
+
+</html>

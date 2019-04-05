@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Untitled Document</title>
+    <style>
+        *{margin:0;padding:0;list-style:none;text-decoration:none;}
+    </style>
+</head>
+<body>
+    用户名<input type="text" id="name">
+    密码 <input type="text" id="psd">
+    学号 <input type="text" id="stuNum">
+    年龄 <input type="text" id="age">
+    班级 <input type="text" id="cla">
+    <button id="sign">注册</button>
+</body>
+<script>
+    let sign = document.getElementById('sign')
+    sign.onclick = function(){
+        let name = document.getElementById('name').value,
+            password = document.getElementById('psd').value,
+            stuNum = document.getElementById('stuNum').value,
+            age = document.getElementById('age').value,
+            cla = document.getElementById('cla').value;
+
+        let params = 'stuNum=' + stuNum + '&password=' + password  + '&age=' + age+ '&name=' + name + '&class=' + cla;
+
+        if (stuNum.length > 0 && password.length > 0) {
+            xmlHttp = new XMLHttpRequest();
+            // xmlHttp.open("GET", "/login?" + params, true);
+            // xmlHttp.send(null);
+            xmlHttp.open("POST", "/sign", true);
+            xmlHttp.send(params);
+            xmlHttp.onreadystatechange = function() {
+                if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+                    console.log(xmlHttp.responseText);
+                    console.log(typeof xmlHttp.responseText)
+                    if (xmlHttp.responseText == 'sign ok') {
+                        alert('成功')
+                        location.href = '/index.html'
+                    } else {
+                        alert('失败')
+                    }
+                }
+            }
+        }
+
+    }
+    stuNum.onblur = function(){
+        console.log(1)
+        let stuNumVal = document.getElementById('stuNum').value;
+        let params = 'stuNum=' + stuNumVal;
+        if(stuNumVal.length > 0){
+            xmlHttp = new XMLHttpRequest();
+            // xmlHttp.open("GET", "/login?" + params, true);
+            // xmlHttp.send(null);
+            xmlHttp.open("POST", "/hasUser", true);
+            xmlHttp.send(params);
+            xmlHttp.onreadystatechange = function() {
+                if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+                    console.log(xmlHttp.responseText);
+                    console.log(typeof xmlHttp.responseText)
+                    if (xmlHttp.responseText == 'OK') {
+                        alert('账号已经被注册了')
+
+                    }
+                }
+            }
+        }
+    }
+
+</script>
+</html>
