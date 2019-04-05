@@ -11,3 +11,17 @@ node原生http模块 + 原生ajax + mysql 制作的一个登陆注册系统。
 登陆页面学号的输入框和注册页面一样。点击登陆按钮后。浏览器会向后台发送一个login请求。node会根据学号查询数据库。如果密码和数据库中的密码一样则返回ok。后台会返回一个cookie给浏览器。
 
 # mysql
+
+create database school;
+create table student
+(
+  id      int auto_increment comment 'student id'
+    primary key,
+  stu_num int          not null comment 'student number',
+  name    varchar(32)  not null comment 'struent name',
+  age     int          not null comment 'student age',
+  class   int          not null comment 'student class',
+  pwd     varchar(128) not null,
+  constraint student_stu_num_uindex
+    unique (stu_num)
+);
