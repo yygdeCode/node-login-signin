@@ -13,6 +13,7 @@ node原生http模块 + 原生ajax + mysql 制作的一个登陆注册系统。
 # mysql
 
 create database school;
+
 create table student
 (
   id      int auto_increment comment 'student id'
